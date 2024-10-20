@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cryptobot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cryptobot
+  template:
+    metadata:
+      labels:
+        app: cryptobot
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: cryptobot
+        image: ghcr.io/timothechauvet/my-looser-cryptobot:latest
+        env:
+        - name: PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cryptobot-secrets
+              key: PRIVATE_KEY
+      imagePullSecrets:
+      - name: ghcr-secret

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yourls
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yourls
+  template:
+    metadata:
+      labels:
+        app: yourls
+    spec:
+      initContainers:
+      - name: test-mysql
+        image: mysql:5.7
+        command: ['sh', '-c', 'until mysql -h mysql-yourls -u db_user -p"db_password" -e "SELECT 1"; do echo waiting for mysql; sleep 2; done;']
+      containers:
+      - name: yourls
+        image: yourls:latest
+        env:
+        - name: APACHE_SERVER_NAME
+          value: "tmth.fr"
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config
+          mountPath: /var/www/html/user/config.php
+          subPath: config.php
+      volumes:
+      - name: config
+        configMap:
+          name: yourls-config
+

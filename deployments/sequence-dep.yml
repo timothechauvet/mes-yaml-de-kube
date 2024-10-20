@@ -12,6 +12,7 @@ spec:
       labels:
         app: sequence-telegram-generator
     spec:
+      restartPolicy: Always
       containers:
       - name: sequence-telegram-generator
         image: ghcr.io/timothechauvet/sequence-telegram-generator:latest
