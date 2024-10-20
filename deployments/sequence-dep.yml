@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sequence-telegram-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sequence-telegram-generator
+  template:
+    metadata:
+      labels:
+        app: sequence-telegram-generator
+    spec:
+      containers:
+      - name: sequence-telegram-generator
+        image: ghcr.io/timothechauvet/sequence-telegram-generator:latest
+        env:
+        - name: TELEGRAM_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: sequence-secrets
+              key: TELEGRAM_BOT_TOKEN
+        - name: HASHED_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: sequence-secrets
+              key: HASHED_PASSWORD
+      imagePullSecrets:
+      - name: ghcr-secret
