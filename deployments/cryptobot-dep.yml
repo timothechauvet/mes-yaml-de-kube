@@ -23,6 +23,6 @@ spec:
               name: cryptobot-secrets
               key: PRIVATE_KEY
         - name: MULTIPLICATOR
-          value: 10
+          value: "10"
       imagePullSecrets:
       - name: ghcr-secret
