@@ -5,8 +5,8 @@ metadata:
 data:
   config.php: |
     <?php
-    define( 'YOURLS_DB_USER', 'db_user' );
-    define( 'YOURLS_DB_PASS', 'db_password' );
+    define( 'YOURLS_DB_USER', 'timothe' );
+    define( 'YOURLS_DB_PASS', 'secret' );
     define( 'YOURLS_DB_NAME', 'yourls_db' );
     define( 'YOURLS_DB_HOST', 'mysql-yourls' );
     define( 'YOURLS_SITE', 'https://tmth.fr' );

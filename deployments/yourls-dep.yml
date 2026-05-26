@@ -15,7 +15,7 @@ spec:
       initContainers:
       - name: test-mysql
         image: mysql:5.7
-        command: ['sh', '-c', 'until mysql -h mysql-yourls -u db_user -p"db_password" -e "SELECT 1"; do echo waiting for mysql; sleep 2; done;']
+        command: ['sh', '-c', 'until mysql -h mysql-yourls -u timothe -p"secret" -e "SELECT 1"; do echo waiting for mysql; sleep 2; done;']
       containers:
       - name: yourls
         image: yourls:latest
@@ -23,7 +23,7 @@ spec:
         - name: APACHE_SERVER_NAME
           value: "tmth.fr"
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         volumeMounts:
         - name: config
           mountPath: /var/www/html/user/config.php
