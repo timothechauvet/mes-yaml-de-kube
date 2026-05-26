@@ -12,24 +12,47 @@ spec:
       labels:
         app: yourls
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: o1k2
       initContainers:
       - name: test-mysql
-        image: mysql:5.7
-        command: ['sh', '-c', 'until mysql -h mysql-yourls -u timothe -p"secret" -e "SELECT 1"; do echo waiting for mysql; sleep 2; done;']
+        image: mariadb:10.11
+        env:
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: user
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: password
+        command: ['sh', '-c', 'set -x; until mariadb -h mysql-yourls --user="$MYSQL_USER" --password="$MYSQL_PASSWORD" -e "SELECT 1"; do echo "waiting for mysql at mysql-yourls"; sleep 2; done;']
+      - name: create-index
+        image: busybox
+        command: ['sh', '-c', 'echo "<?php header(''Location: /admin/'');" > /var/www/html/index.php']
+        volumeMounts:
+        - name: html
+          mountPath: /var/www/html
       containers:
       - name: yourls
-        image: yourls:latest
+        image: yourls:1.9.2-apache
         env:
         - name: APACHE_SERVER_NAME
           value: "tmth.fr"
         ports:
-        - containerPort: 8080
+        - containerPort: 80
         volumeMounts:
         - name: config
           mountPath: /var/www/html/user/config.php
           subPath: config.php
+        - name: html
+          mountPath: /var/www/html
       volumes:
       - name: config
         configMap:
           name: yourls-config
+      - name: html
+        emptyDir: {}
 

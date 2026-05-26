@@ -12,9 +12,11 @@ spec:
       labels:
         app: mysql-yourls
     spec:
+      nodeSelector:
+        kubernetes.io/hostname: o1k2
       containers:
       - name: mysql-yourls
-        image: mysql:5.7
+        image: mariadb:10.11
         env:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:

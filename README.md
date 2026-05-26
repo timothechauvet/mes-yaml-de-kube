@@ -87,8 +87,17 @@ To use these configurations:
 
 3. Apply the configurations using `kubectl` or `kind`:
    ```
-   kubectl apply -f your-deployment.yaml
-   ```
+    kubectl apply -f your-deployment.yaml
+    ```
+
+## Troubleshooting & Notes 🔍
+
+- **YOURLS Database Credential Sync**:
+  If the MariaDB database was already initialized under an older deployment, updating the Kubernetes Secret (`mysql-secrets`) will not automatically update the credentials inside the persistent volume storage. To reconcile them, manually apply the SQL update inside the MariaDB container to create the new user and match the secrets:
+  ```bash
+  echo "GRANT ALL PRIVILEGES ON yourls_db.* TO 'timothe'@'%' IDENTIFIED BY 'secret'; ALTER USER 'root'@'%' IDENTIFIED BY 'secret'; ALTER USER 'root'@'localhost' IDENTIFIED BY 'secret'; FLUSH PRIVILEGES;" | kubectl exec -i -n default deployment/mysql-yourls -- mariadb -u root -poldsecret
+  ```
+  Always ensure that credentials in files are sanitized to `timothe` and `secret` before staging/committing.
 
 ## Contributing 🤝
 
@@ -103,9 +112,7 @@ Not needed
 Yes
 
 ## Contact 🤗
-- via Mastodon : https://h4.io/@timothechauvet
 - via LinkedIn : https://www.linkedin.com/in/timothechauvet/
-- via Twitter : https://twitter.com/timothechauvet
 - via Mail : timothe@chauvet.cloud
 - or via an issue in this repository
 
