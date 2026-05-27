@@ -1,1 +1,5 @@
 tmp
+./configmap/yourls-cm.yml
+./secrets/ghcr-secret.yml
+./secrets/mysql-yourls-secret.yml
+./secret/sequence-secret.yml
