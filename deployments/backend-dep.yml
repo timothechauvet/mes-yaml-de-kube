@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: jodubranding
+  labels:
+    app: backend
+  annotations:
+    keel.sh/policy: force
+    keel.sh/trigger: poll
+    keel.sh/poll: 5m
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: o1k2
+      containers:
+      - name: backend
+        image: ghcr.io/timothechauvet/choose-your-username-backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: PUBLIC_SUPABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: PUBLIC_SUPABASE_URL
+        - name: PUBLIC_SUPABASE_ANON_KEY
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: PUBLIC_SUPABASE_ANON_KEY
+        - name: SERVICE_ROLE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: supabase-secret
+              key: SERVICE_ROLE_KEY
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-secret
+              key: REDIS_PASSWORD
+        - name: REDIS_URL
+          value: "redis://:$(REDIS_PASSWORD)@redis-service:6379"
+        - name: META_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: meta-secret
+              key: META_APP_ID
+              optional: true
+        - name: META_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: meta-secret
+              key: META_APP_SECRET
+              optional: true
+        - name: MOLLIE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: mollie-secret
+              key: MOLLIE_API_KEY
+              optional: true
+        - name: MOLLIE_WEBHOOK_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: mollie-secret
+              key: MOLLIE_WEBHOOK_SECRET
+              optional: true
+        - name: FRONTEND_URL
+          value: "https://jodubranding.com"
+        - name: BACKEND_URL
+          value: "http://backend-service:3000"
+        envFrom:
+        - secretRef:
+            name: supabase-secret
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "500Mi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+      imagePullSecrets:
+      - name: ghcr-secret
