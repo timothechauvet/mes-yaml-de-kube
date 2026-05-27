@@ -10,6 +10,7 @@ data:
     }
     define( 'YOURLS_DB_USER', 'timothe' );
     define( 'YOURLS_DB_PASS', 'secret' );
+    define( 'YOURLS_NO_HASH_PASSWORD', true );
     define( 'YOURLS_DB_NAME', 'yourls_db' );
     define( 'YOURLS_DB_HOST', 'mysql-yourls' );
     define( 'YOURLS_SITE', 'https://tmth.fr' );

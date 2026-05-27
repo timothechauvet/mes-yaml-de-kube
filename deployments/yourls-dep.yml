@@ -37,7 +37,7 @@ spec:
           mountPath: /var/www/html
       containers:
       - name: yourls
-        image: yourls:1.9.2-apache
+        image: yourls:1.10.4-apache
         env:
         - name: APACHE_SERVER_NAME
           value: "tmth.fr"
