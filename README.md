@@ -9,16 +9,12 @@ Collection of my .yml scripts for my personal Kube cluster (consisting currently
 Kubernetes
 YAML
 
-This repository contains YAML configurations for Kubernetes deployments and my K3s cluster.
+This repository contains YAML configurations for Kubernetes deployments and my Jodukube cluster.
 
 ## Repository Structure 📁
 
 ```
 .
-├── certificate/
-│   └── ... (TLS certificate configurations)
-├── clusterissuer/
-│   └── ... (Cert-manager cluster issuer configurations)
 ├── configmap/
 │   └── ... (ConfigMap resources)
 ├── deployments/
@@ -40,8 +36,6 @@ This repository contains YAML configurations for Kubernetes deployments and my K
 
 ## Kubernetes Resources 🚀
 
-- **Certificate** : SSL/TLS certificate configurations
-- **ClusterIssuer** : Cert-manager configurations for automated certificate management
 - **ConfigMap** : Configuration data for applications
 - **Deployments** : Application deployment specifications
 - **HTTPRoute** : External access routing via Gateway API
