@@ -43,5 +43,5 @@ data:
       'yourls-loader.php',
     );
     $yourls_user_passwords = array(
-      'yourls_user' => 'yourls_password',
+      'timothe' => 'secret',
     );
