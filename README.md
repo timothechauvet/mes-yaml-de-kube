@@ -64,6 +64,7 @@ The personal Kube cluster runs the following stack of core and infrastructure co
 | **Kube Controller Manager** | `registry.k8s.io/kube-controller-manager:v1.34.1` | Kubernetes control plane controller loop manager |
 | **Kube Scheduler** | `registry.k8s.io/kube-scheduler:v1.34.1` | Kubernetes control plane scheduler |
 | **Etcd** | `registry.k8s.io/etcd:3.6.4-0` | Kubernetes control plane distributed database |
+| **Keel.sh** | `ghcr.io/keel-hq/keel:latest` | Automated Kubernetes deployment updates operator |
 
 ## Usage 🛠️
 
