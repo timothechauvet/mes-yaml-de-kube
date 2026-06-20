@@ -34,6 +34,13 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name: yasssf-api
+      hostname: api.yasssf.com
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
     - name: yasssf
       hostname: yasssf.com
       port: 80
