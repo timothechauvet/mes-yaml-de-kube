@@ -1,0 +1,43 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: main-gateway
+  namespace: jodubranding
+spec:
+  gatewayClassName: cilium
+  listeners:
+    - name: http
+      hostname: jodubranding.local
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: Same
+    - name: sdjsac
+      hostname: sdjsac.in
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: keel-webhook
+      hostname: keel-webhook.chauvet.dev
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: keel-webhook-internal
+      hostname: cilium-gateway-main-gateway.jodubranding.svc.cluster.local
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All
+    - name: yasssf
+      hostname: yasssf.com
+      port: 80
+      protocol: HTTP
+      allowedRoutes:
+        namespaces:
+          from: All

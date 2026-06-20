@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sdjsac-frontend
+  namespace: default
+  labels:
+    app: sdjsac-frontend
+  annotations:
+    keel.sh/policy: force
+    keel.sh/trigger: webhook
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sdjsac-frontend
+  template:
+    metadata:
+      labels:
+        app: sdjsac-frontend
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: o1k2
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: sdjsac-frontend
+          image: ghcr.io/timothechauvet/sdjsac-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODE_ENV
+              value: production
+            - name: PORT
+              value: "80"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

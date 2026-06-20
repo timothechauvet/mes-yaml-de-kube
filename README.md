@@ -1,6 +1,6 @@
 # Mes .YAML de Kubernetes ☸️
 
-Collection of my .yml scripts for my personal Kube cluster (consisting currently of 1 VM 🤓🤓)
+Collection of my .yml scripts for my personal Kube cluster (currently 2 Oracle OCI VMs 🤓🤓)
 
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/timothechauvet/mes-yaml-de-kube/main)
 
@@ -9,7 +9,7 @@ Collection of my .yml scripts for my personal Kube cluster (consisting currently
 Kubernetes
 YAML
 
-This repository contains YAML configurations for Kubernetes deployments and my Jodukube cluster.
+This repository contains sanitized YAML configurations for Kubernetes deployments and my Jodukube cluster. No live secrets should be committed here. Usernames should be replaced with `timothe`, passwords with `secret`, and secret/API values omitted.
 
 ## Repository Structure 📁
 
