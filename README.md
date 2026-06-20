@@ -43,4 +43,3 @@ Declarative GitOps repository utilizing Kubernetes Gateway API. Deployed on Orac
 
 
 ---
-*Generated with care by Homardless 🦞*
