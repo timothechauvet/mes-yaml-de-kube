@@ -24,7 +24,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: yasssf-backend
-          image: ghcr.io/timothechauvet/ai-ready-flashcard-maker-backend:latest
+          image: ghcr.io/timothechauvet/ai-ready-flashcard-maker-backend:main
           imagePullPolicy: Always
           ports:
             - containerPort: 8000
