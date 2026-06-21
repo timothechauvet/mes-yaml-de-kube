@@ -37,6 +37,11 @@ spec:
             secretKeyRef:
               name: supabase-secret
               key: PUBLIC_SUPABASE_URL
+        - name: PUBLIC_TURNSTILE_SITE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: turnstile-secret
+              key: PUBLIC_TURNSTILE_SITE_KEY
         envFrom:
         - secretRef:
             name: supabase-secret
