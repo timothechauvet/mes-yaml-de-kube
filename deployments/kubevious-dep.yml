@@ -96,3 +96,11 @@ spec:
     - port: 80
       targetPort: 5001
   type: ClusterIP
+---
+apiVersion: v1
+data:
+  auth: am9kdWt1YmU6JDEka1FSRlNnWTEkUzcwQ3ZYQjh4UjYyYVBCbjlnV3RHLwo=
+kind: Secret
+metadata:
+  name: kubevious-auth
+  namespace: default
