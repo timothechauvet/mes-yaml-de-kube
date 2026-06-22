@@ -13,7 +13,7 @@ spec:
         app: yourls
     spec:
       nodeSelector:
-        kubernetes.io/arch: arm64
+        kubernetes.io/hostname: o1k2
       initContainers:
       - name: test-mysql
         image: mariadb:10.11
