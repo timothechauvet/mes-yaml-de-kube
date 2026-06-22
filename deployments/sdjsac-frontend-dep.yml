@@ -19,7 +19,7 @@ spec:
         app: sdjsac-frontend
     spec:
       nodeSelector:
-        kubernetes.io/hostname: o1k2
+        kubernetes.io/arch: arm64
       imagePullSecrets:
         - name: ghcr-secret
       containers:

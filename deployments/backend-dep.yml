@@ -20,7 +20,7 @@ spec:
         app: backend
     spec:
       nodeSelector:
-        kubernetes.io/hostname: o1k2
+        kubernetes.io/arch: arm64
       containers:
       - name: backend
         image: ghcr.io/timothechauvet/choose-your-username-backend:latest

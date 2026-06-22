@@ -47,4 +47,4 @@ spec:
             cpu: 100m
             memory: 128Mi
       nodeSelector:
-        kubernetes.io/hostname: o1k2
+        kubernetes.io/arch: arm64

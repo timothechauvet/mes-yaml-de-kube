@@ -16,7 +16,7 @@ spec:
         app: jodubranding-nginx
     spec:
       nodeSelector:
-        kubernetes.io/hostname: o1k2
+        kubernetes.io/arch: arm64
       containers:
       - name: nginx
         image: nginx:alpine
