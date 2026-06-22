@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kubevious
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubevious-view
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: kubevious
+    namespace: default
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevious-kubeconfig
+  namespace: default
+data:
+  config: |
+    apiVersion: v1
+    kind: Config
+    clusters:
+      - cluster:
+          certificate-authority: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          server: https://kubernetes.default.svc
+        name: local
+    contexts:
+      - context:
+          cluster: local
+          user: kubevious
+        name: local
+    current-context: local
+    users:
+      - name: kubevious
+        user:
+          tokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubevious
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubevious
+  template:
+    metadata:
+      labels:
+        app: kubevious
+    spec:
+      serviceAccountName: kubevious
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      containers:
+        - name: kubevious
+          image: kubevious/portable:0.7.40
+          ports:
+            - containerPort: 5001
+          volumeMounts:
+            - name: kubeconfig
+              mountPath: /root/.kube
+              readOnly: true
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      volumes:
+        - name: kubeconfig
+          configMap:
+            name: kubevious-kubeconfig
+            items:
+              - key: config
+                path: config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kubevious
+  namespace: default
+spec:
+  selector:
+    app: kubevious
+  ports:
+    - port: 80
+      targetPort: 5001
+  type: ClusterIP
