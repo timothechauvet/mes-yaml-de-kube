@@ -26,7 +26,7 @@ spec:
             secretKeyRef:
               key: token
               name: cloudflared-token
-        image: cloudflare/cloudflared:latest
+        image: cloudflare/cloudflared:2026.6.1
         imagePullPolicy: Always
         livenessProbe:
           failureThreshold: 3
